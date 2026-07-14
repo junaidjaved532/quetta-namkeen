@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Quetta Namkeen"
+version = "1.0.0"
+id = "artifacts/quetta-namkeen"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26073
+
+[services.development]
+run = "pnpm --filter @workspace/quetta-namkeen run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/quetta-namkeen", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/quetta-namkeen/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26073"
+BASE_PATH = "/"
